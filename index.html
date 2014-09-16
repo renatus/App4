@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="testApp">
+    <head>
+        <title>Test AngularJS app</title>
+
+        <!-- Material design elements for Angular lib CSS -->
+        <link rel="stylesheet" type="text/css" href="angular-material.css" />
+        <script type="text/javascript" src="angular.js"></script>
+        <!-- We need ngAnimate for Material design elements for Angular lib -->
+        <script type="text/javascript" src="angular-animate.js"></script>
+        <!-- Material design elements for Angular lib -->
+        <!--Don't forget to add CSS file and ngMaterial dependency to app-->
+        <script type="text/javascript" src="angular-material.js"></script>
+    </head>
+
+    <body>
+		<div ng-controller="ExampleController">
+			<form name="testForm" novalidate>
+				<label>Test number, from 5 to 20:</label>
+				<input type="number" ng-model="tst.number" min="5" max="20" placeholder="10">
+				<button ng-click="alert()" ng-disabled="testForm.$invalid">Button with ng-disabled</button>
+				<material-button class="material-button-raised" ng-click="alert()" ng-disabled="testForm.$invalid">Material button with ng-disabled</material-button>
+				<material-button class="material-button-raised" ng-click="alert()">Material button without ng-disabled</material-button>
+			</form>
+
+		</div>
+
+	<script>
+		angular.module('testApp', ['ngMaterial'])
+			.controller('ExampleController', ['$scope', function($scope) {
+				$scope.tst = {};
+
+				$scope.alert = function() {
+					alert("Button works!");
+				};
+			}]);
+	</script>
+
+    </body>
+</html>
