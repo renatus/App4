@@ -1,40 +1,43 @@
 <!DOCTYPE html>
-<html ng-app="testApp">
-    <head>
-        <title>Test AngularJS app</title>
+<html>
+  <head>
+    <link rel="stylesheet" href="angular-material.css" />
 
-        <!-- Material design elements for Angular lib CSS -->
-        <link rel="stylesheet" type="text/css" href="angular-material.css" />
-        <script type="text/javascript" src="angular.js"></script>
-        <!-- We need ngAnimate for Material design elements for Angular lib -->
-        <script type="text/javascript" src="angular-animate.js"></script>
-        <!-- Material design elements for Angular lib -->
-        <!--Don't forget to add CSS file and ngMaterial dependency to app-->
-        <script type="text/javascript" src="angular-material.js"></script>
-    </head>
+    <script src="angular.js"></script>
+    <script src="angular-aria.js"></script>
+    <script src="angular-animate.js"></script>
+    <script src="angular-material.js"></script>
+    <script src="hammer.js"></script>
 
-    <body>
-		<div ng-controller="ExampleController">
-			<form name="testForm" novalidate>
-				<label>Test number, from 5 to 20:</label>
-				<input type="number" ng-model="tst.number" min="5" max="20" placeholder="10">
-				<button ng-click="alert()" ng-disabled="testForm.$invalid">Button with ng-disabled</button>
-				<material-button class="material-button-raised" ng-click="alert()" ng-disabled="testForm.$invalid">Material button with ng-disabled</material-button>
-				<material-button class="material-button-raised" ng-click="alert()">Material button without ng-disabled</material-button>
-			</form>
+    <script>
+      var app = angular.module('myapp', ['ngMaterial'])
+        .controller("autocompleteController", function($http){
 
-		</div>
+          this.querySearch = function(){
+            return $http.get("http://api.geonames.org/citiesJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&lang=de&username=demo")
+            .then(function(result){
+              return result.data.geonames;
+            })
+          }
+        });
 
-	<script>
-		angular.module('testApp', ['ngMaterial'])
-			.controller('ExampleController', ['$scope', function($scope) {
-				$scope.tst = {};
+    </script>
+    <style>
+    </style>
+  </head>
 
-				$scope.alert = function() {
-					alert("Button works!");
-				};
-			}]);
-	</script>
+  <body ng-app='myapp' layout="column" ng-controller="autocompleteController as ctrl" >
 
-    </body>
+    <md-autocomplete flex
+            md-selected-item="ctrl.selectedItem"
+            md-search-text="ctrl.searchText"
+            md-items="item in ctrl.querySearch(ctrl.searchText)"
+            md-item-text="item.name"
+            md-floating-label="Search Countries">
+
+            <span md-highlight-text="ctrl.searchText">{{item.name}}</span>
+    </md-autocomplete>
+
+  </body>
+
 </html>
