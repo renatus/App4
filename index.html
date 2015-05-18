@@ -13,13 +13,6 @@
       var app = angular.module('myapp', ['ngMaterial'])
         .controller("autocompleteController", function($http){
 
-            //Populate scope by hands
-            $scope.activities = [
-                {"nid":"6650","langcode":"en","title":"End an agreements with Stream ISP"},
-                {"nid":"3188","langcode":"en","title":"Renew domain exocortex.pp.ua"}
-            ];
-
-
             this.querySearch = [
                 {"nid":"6650","langcode":"en","name":"End an agreements with Stream ISP"},
                 {"nid":"3188","langcode":"en","name":"Renew domain exocortex.pp.ua"}
