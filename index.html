@@ -8,14 +8,16 @@
     <script src="angular-animate.js"></script>
     <script src="angular-material.js"></script>
     <script src="hammer.js"></script>
+    <!-- Timezone operations -->
+    <script src="jstz.js"></script>
 
     <script>
-      var app = angular.module('myapp', ['ngMaterial'])
+      /*var app = angular.module('myapp', ['ngMaterial'])
         .controller("autocompleteController", function($http){
 
             this.querySearch = [
-                {"nid":"6650","langcode":"en","name":"End an agreements with Stream ISP"},
-                {"nid":"3188","langcode":"en","name":"Renew domain exocortex.pp.ua"}
+                {"name":"London"},
+                {"name":"Paris"}
             ];
 
           //this.querySearch = function(){
@@ -29,7 +31,13 @@
 
             //return "London";
           //}
-        });
+        }); */
+
+         //Determine the time zone of the browser client, jstz.min.js required
+        var timeZone = jstz.determine();
+        //Determine time zone name
+        var timeZoneName = timeZone.name();
+        alert(timeZoneName);
 
     </script>
     <style>
