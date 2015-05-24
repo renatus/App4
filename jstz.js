@@ -477,7 +477,7 @@ jstz.olson.timezones = {
     '600,0': 'Asia/Vladivostok',
     '600,1,s': 'Australia/Sydney',
     '630,1,s': 'Australia/Lord_Howe',
-    '660,1': 'Asia/Kamchatka',
+    '660,0': 'Asia/Kamchatka',
     '660,0': 'Pacific/Noumea',
     '690,0': 'Pacific/Norfolk',
     '720,1,s': 'Pacific/Auckland',
