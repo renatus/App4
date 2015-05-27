@@ -37,7 +37,10 @@
         var timeZone = jstz.determine();
         //Determine time zone name
         var timeZoneName = timeZone.name();
-        alert(timeZoneName);
+
+        var tz2 = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        alert(tz2);
+
 
     </script>
     <style>
