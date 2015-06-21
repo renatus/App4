@@ -6,7 +6,7 @@
     <script src="angular.js"></script>
     <script src="angular-aria.js"></script>
     <script src="angular-animate.js"></script>
-    <script src="angular-messages.js"></script>
+    <!--<script src="angular-messages.js"></script>-->
     <script src="angular-material.js"></script>
     <script src="hammer.js"></script>
     <!-- Timezone operations -->
@@ -25,7 +25,7 @@
         (function () {
   'use strict';
   angular
-      .module('autocompleteFloatingLabelDemo', ['ngMaterial', 'ngMessages'])
+      .module('autocompleteFloatingLabelDemo', ['ngMaterial'])
       .controller('DemoCtrl', DemoCtrl);
   function DemoCtrl ($timeout, $q) {
     var self = this;
