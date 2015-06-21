@@ -70,7 +70,9 @@
 
       //https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/map
       //The map() method creates a new array with the results of calling a provided function on every element in this array.
-      return allStates.split(/, +/g).map( function (state) {
+      //return allStates.split(/, +/g).map( function (state) {
+
+      return allStates.map( function (state) {
         return {
           value: state.toLowerCase(),
           display: state
