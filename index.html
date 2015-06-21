@@ -12,52 +12,44 @@
     <script src="jstz.js"></script>
 
     <script>
-      /*var app = angular.module('myapp', ['ngMaterial'])
+      var app = angular.module('myapp', ['ngMaterial'])
         .controller("autocompleteController", function($http){
 
-            this.querySearch = [
-                {"name":"London"},
-                {"name":"Paris"}
-            ];
-
-          //this.querySearch = function(){
-            //return $http.get("http://api.geonames.org/citiesJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&lang=de&username=demo")
-
-            //return $http.get("http://app4.sky37.pp.ua/test.xml")
-            //.then(function(result){
-              //return result.data.geonames;
-              //console.log(result);
-            //})
-
-            //return "London";
-          //}
-        }); */
-
-         //Determine the time zone of the browser client, jstz.min.js required
-        var timeZone = jstz.determine();
-        //Determine time zone name
-        var timeZoneName = timeZone.name();
-
-        var tz2 = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        alert(tz2);
-
-
+        });
     </script>
-    <style>
-    </style>
+
   </head>
 
   <body ng-app='myapp' layout="column" ng-controller="autocompleteController as ctrl" >
 
-    <md-autocomplete flex
+  <md-content class="md-padding">
+    <form ng-submit="$event.preventDefault()" name="searchForm">
+      <p>The following example demonstrates floating labels being used as a normal form element.</p>
+      <div layout-gt-sm="row">
+        <md-input-container flex>
+          <label>Name</label>
+          <input type="text"/>
+        </md-input-container>
+        <md-autocomplete flex required
+            md-input-name="autocompleteField"
+            md-no-cache="ctrl.noCache"
             md-selected-item="ctrl.selectedItem"
             md-search-text="ctrl.searchText"
             md-items="item in ctrl.querySearch(ctrl.searchText)"
-            md-item-text="item.name"
-            md-floating-label="Search Countries">
-
-            <span md-highlight-text="ctrl.searchText">{{item.name}}</span>
-    </md-autocomplete>
+            md-item-text="item.display"
+            md-floating-label="Favorite state">
+          <md-item-template>
+            <span md-highlight-text="ctrl.searchText">{{item.display}}</span>
+          </md-item-template>
+          <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
+            <div ng-message="required">You <b>must</b> have a favorite state.</div>
+            <div ng-message="minlength">Your entry is not long enough.</div>
+            <div ng-message="maxlength">Your entry is too long.</div>
+          </div>
+        </md-autocomplete>
+      </div>
+    </form>
+  </md-content>
 
   </body>
 
