@@ -110,11 +110,15 @@
   <md-content class="md-padding">
     <form ng-submit="$event.preventDefault()" name="searchForm">
       <p>The following example demonstrates floating labels being used as a normal form element.</p>
+      <!-- Putting two input fields in a row-->
       <div layout-gt-sm="row">
+
+        <!--Unnecessary field to enter name-->
         <md-input-container flex>
           <label>Name</label>
           <input type="text"/>
         </md-input-container>
+
         <md-autocomplete flex required
             md-input-name="autocompleteField"
             <!-- Disables caching completely-->
@@ -124,6 +128,8 @@
             <!--Show list of suggestions by calling search function with user-entered text as an argument-->
             md-items="item in ctrl.querySearch(ctrl.searchText)"
             md-item-text="item.display"
+            <!--Message to show when nothing was found-->
+            md-not-found="There is no such a state like this!"
             <!-- Text of a label-->
             md-floating-label="Favorite state">
           <md-item-template>
