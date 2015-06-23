@@ -6,7 +6,6 @@
         <script src="angular.js"></script>
         <script src="angular-aria.js"></script>
         <script src="angular-animate.js"></script>
-        <!--<script src="angular-messages.js"></script>-->
         <script src="angular-material.js"></script>
         <script src="hammer.js"></script>
         <!-- Timezone operations -->
@@ -15,9 +14,6 @@
 
 
         <script>
-            //var app = angular.module('myapp', ['ngMaterial'])
-            //.controller("autocompleteController", function($http){
-            //});
 
             (function () {
                 'use strict';
@@ -25,18 +21,43 @@
                 .module('autocompleteFloatingLabelDemo', ['ngMaterial'])
                 .controller('DemoCtrl', DemoCtrl);
 
+                //Controller to handle app activity
                 function DemoCtrl() {
                     var self = this;
-                    // list of `state` value/display objects
+                    // Create list of 'state' value/display objects
                     self.states = loadAll();
                     self.selectedItem = null;
                     self.searchText = null;
                     self.querySearch = querySearch;
 
-                    //Search for states, that names begins with user-entered substring
+
+
+                    // Build 'states' list of key/value pairs
+                    function loadAll() {
+
+                        var allStates = ['Alabama', 'Alaska', 'Arizona', 'Arkansas'];
+
+                        //The map() method creates a new array with the results of calling a provided function
+                        //on every element in this array
+                        return allStates.map(function(state) {
+                            return {
+                                //Lowercase-only state name (for search)
+                                value: state.toLowerCase(),
+                                //State name with lowercase and uppercase letters
+                                display: state
+                            };
+                        });
+                    }
+
+
+
+                    //Search for states, which names begins with user-entered substring
                     function querySearch (query) {
 
+                        //If user made some query
                         if(query){
+                            //Filter() method creates a new array
+                            //with all elements that pass the test implemented by the provided function.
                             var results = self.states.filter(createFilterFor(query));
                         } else {
                             var results = [];
@@ -48,25 +69,20 @@
                         return results;
                     }
 
-                    // Build `states` list of key/value pairs
-                    function loadAll() {
 
-                        var allStates = ['Alabama', 'Alaska', 'Arizona', 'Arkansas'];
-
-                        return allStates.map( function (state) {
-                            return {
-                                value: state.toLowerCase(),
-                                display: state
-                            };
-                        });
-                    }
 
                     // Create filter function for a query string
                     function createFilterFor(query) {
                         //Convert query substring to lowercase
                         var lowercaseQuery = angular.lowercase(query);
                         return function filterFn(state) {
-                            return (state.value.indexOf(lowercaseQuery) === 0);
+                            //.indexOf searches a string for the lowercase query substring
+                            //True wil be returned in case string begins with substring
+                            //Because in this case index of substring will be equal to 0
+                            //return (state.value.indexOf(lowercaseQuery) === 0);
+                            if(state.value.indexOf(lowercaseQuery) === 0){
+                                return true;
+                            }
                         };
                     }
 
