@@ -27,7 +27,8 @@
   angular
       .module('autocompleteFloatingLabelDemo', ['ngMaterial'])
       .controller('DemoCtrl', DemoCtrl);
-  function DemoCtrl ($timeout, $q) {
+  //function DemoCtrl ($timeout, $q) {
+  function DemoCtrl() {
     var self = this;
     // list of `state` value/display objects
     self.states        = loadAll();
