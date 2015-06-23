@@ -80,9 +80,15 @@
                             //True wil be returned in case string begins with substring
                             //Because in this case index of substring will be equal to 0
                             //return (state.value.indexOf(lowercaseQuery) === 0);
-                            if(state.value.indexOf(lowercaseQuery) === 1){
+                            //if(state.value.indexOf(lowercaseQuery) === 1){
+                            //    return true;
+                            //}
+
+                            //This will return true in case there is an occurence of substring anywhere in the string
+                            if(state.value.indexOf(lowercaseQuery)){
                                 return true;
                             }
+
                         };
                     }
 
