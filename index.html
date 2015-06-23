@@ -126,17 +126,17 @@
             md-search-text="ctrl.searchText"
             md-items="item in ctrl.querySearch(ctrl.searchText)"
             md-item-text="item.display"
-            md-not-found="There is no such a state like this!"
             md-floating-label="Favorite state">
             <!-- md-no-cache disables caching completely-->
             <!-- md-items shows list of suggestions by calling search function with user-entered text as an argument-->
-            <!-- md-not-foud - message to show when nothing was found-->
             <!-- md-floating-label - sets text of an input field label-->
 
+          <!-- Template for suggestions -->
           <md-item-template>
-            <span md-highlight-text="ctrl.searchText">{{item.display}}</span>
+            <span md-highlight-text="ctrl.searchText">{{item.display}} state</span>
           </md-item-template>
 
+          <!-- Message to show when nothing was found-->
           <md-not-found>
             No matches found.
           </md-not-found>
