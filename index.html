@@ -1,160 +1,125 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="angular-material.css" />
+    <head>
+        <link rel="stylesheet" href="angular-material.css" />
 
-    <script src="angular.js"></script>
-    <script src="angular-aria.js"></script>
-    <script src="angular-animate.js"></script>
-    <!--<script src="angular-messages.js"></script>-->
-    <script src="angular-material.js"></script>
-    <script src="hammer.js"></script>
-    <!-- Timezone operations -->
-    <script src="jstz.js"></script>
-
-    <script>
-      //var app = angular.module('myapp', ['ngMaterial'])
-        //.controller("autocompleteController", function($http){
-        //});
+        <script src="angular.js"></script>
+        <script src="angular-aria.js"></script>
+        <script src="angular-animate.js"></script>
+        <!--<script src="angular-messages.js"></script>-->
+        <script src="angular-material.js"></script>
+        <script src="hammer.js"></script>
+        <!-- Timezone operations -->
+        <script src="jstz.js"></script>
 
 
 
+        <script>
+            //var app = angular.module('myapp', ['ngMaterial'])
+            //.controller("autocompleteController", function($http){
+            //});
+
+            (function () {
+                'use strict';
+                angular
+                .module('autocompleteFloatingLabelDemo', ['ngMaterial'])
+                .controller('DemoCtrl', DemoCtrl);
+
+                function DemoCtrl() {
+                    var self = this;
+                    // list of `state` value/display objects
+                    self.states = loadAll();
+                    self.selectedItem = null;
+                    self.searchText = null;
+                    self.querySearch = querySearch;
+
+                    //Search for states, that names begins with user-entered substring
+                    function querySearch (query) {
+
+                        if(query){
+                            var results = self.states.filter(createFilterFor(query));
+                        } else {
+                            var results = [];
+                        }
+
+                        //You can replace if/else statement with the ternary operator
+                        //var results = query ? self.states.filter( createFilterFor(query) ) : [];
+
+                        return results;
+                    }
+
+                    // Build `states` list of key/value pairs
+                    function loadAll() {
+
+                        var allStates = ['Alabama', 'Alaska', 'Arizona', 'Arkansas'];
+
+                        return allStates.map( function (state) {
+                            return {
+                                value: state.toLowerCase(),
+                                display: state
+                            };
+                        });
+                    }
+
+                    // Create filter function for a query string
+                    function createFilterFor(query) {
+                        //Convert query substring to lowercase
+                        var lowercaseQuery = angular.lowercase(query);
+                        return function filterFn(state) {
+                            return (state.value.indexOf(lowercaseQuery) === 0);
+                        };
+                    }
+
+                }
+            })();
+        </script>
+    </head>
 
 
 
-        (function () {
-  'use strict';
-  angular
-      .module('autocompleteFloatingLabelDemo', ['ngMaterial'])
-      .controller('DemoCtrl', DemoCtrl);
-  //function DemoCtrl ($timeout, $q) {
-  function DemoCtrl() {
-    var self = this;
-    // list of `state` value/display objects
-    self.states        = loadAll();
-    self.selectedItem  = null;
-    self.searchText    = null;
-    self.querySearch   = querySearch;
-    // ******************************
-    // Internal methods
-    // ******************************
-    /**
-     * Search for states... use $timeout to simulate
-     * remote dataservice call.
-     */
-    function querySearch (query) {
-      //Ternary operator
-      //var results = query ? self.states.filter( createFilterFor(query) ) : [];
+    <body ng-app='autocompleteFloatingLabelDemo' layout="column" ng-controller="DemoCtrl as ctrl" >
 
-      if(query){
-          var results = self.states.filter(createFilterFor(query));
-      } else {
-          var results = [];
-      }
+        <md-content class="md-padding">
+            <form ng-submit="$event.preventDefault()" name="searchForm">
+                <p>The following example demonstrates floating labels being used as a normal form element.</p>
+                <!-- Putting two input fields in a row-->
+                <div layout-gt-sm="row">
 
-      return results;
-    }
+                    <!--Unnecessary field to enter name-->
+                    <md-input-container flex>
+                        <label>Name</label>
+                        <input type="text"/>
+                    </md-input-container>
 
-    /**
-     * Build `states` list of key/value pairs
-     */
-    function loadAll() {
-      /*var allStates = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
-              Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
-              Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
-              Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina,\
-              North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,\
-              South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia,\
-              Wisconsin, Wyoming'; */
+                    <!-- Autocomplete field. You can't put comments inside md-autocomplete tag-->
+                    <md-autocomplete flex required
+                                     md-input-name="autocompleteField"
+                                     md-no-cache="ctrl.noCache"
+                                     md-selected-item="ctrl.selectedItem"
+                                     md-search-text="ctrl.searchText"
+                                     md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                     md-item-text="item.display"
+                                     md-floating-label="Favorite state">
+                    <!-- md-no-cache disables caching completely-->
+                    <!-- md-items shows list of suggestions by calling search function with user-entered text as an argument-->
+                    <!-- md-floating-label - sets text of an input field label-->
 
-        var allStates = ['Alabama', 'Alaska', 'Arizona', 'Arkansas'];
+                        <!-- Template for suggestions to show to user when he entered something -->
+                        <md-item-template>
+                            <span md-highlight-text="ctrl.searchText">{{item.display}} state</span>
+                        </md-item-template>
 
-      //The split() method splits a String object into an array of strings by separating the string into substrings.
+                        <!-- Message to show when nothing was found-->
+                        <md-not-found>
+                            No matches found.
+                        </md-not-found>
 
-      //https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/map
-      //The map() method creates a new array with the results of calling a provided function on every element in this array.
-      //return allStates.split(/, +/g).map( function (state) {
+                        <!-- Show user-entered text-->
+                        {{ctrl.searchText}}
 
-      return allStates.map( function (state) {
-        return {
-          value: state.toLowerCase(),
-          display: state
-        };
-      });
-    }
-    /**
-     * Create filter function for a query string
-     */
-    function createFilterFor(query) {
-      var lowercaseQuery = angular.lowercase(query);
-      return function filterFn(state) {
-        return (state.value.indexOf(lowercaseQuery) === 0);
-      };
-    }
-  }
-})();
-
-
-
-
-
-
-
-
-    </script>
-
-  </head>
-
-  <body ng-app='autocompleteFloatingLabelDemo' layout="column" ng-controller="DemoCtrl as ctrl" >
-
-  <md-content class="md-padding">
-    <form ng-submit="$event.preventDefault()" name="searchForm">
-      <p>The following example demonstrates floating labels being used as a normal form element.</p>
-      <!-- Putting two input fields in a row-->
-      <div layout-gt-sm="row">
-
-        <!--Unnecessary field to enter name-->
-        <md-input-container flex>
-          <label>Name</label>
-          <input type="text"/>
-        </md-input-container>
-
-        <md-autocomplete flex required
-            md-input-name="autocompleteField"
-            md-no-cache="ctrl.noCache"
-            md-selected-item="ctrl.selectedItem"
-            md-search-text="ctrl.searchText"
-            md-items="item in ctrl.querySearch(ctrl.searchText)"
-            md-item-text="item.display"
-            md-floating-label="Favorite state">
-            <!-- md-no-cache disables caching completely-->
-            <!-- md-items shows list of suggestions by calling search function with user-entered text as an argument-->
-            <!-- md-floating-label - sets text of an input field label-->
-
-          <!-- Template for suggestions -->
-          <md-item-template>
-            <span md-highlight-text="ctrl.searchText">{{item.display}} state</span>
-          </md-item-template>
-
-          <!-- Message to show when nothing was found-->
-          <md-not-found>
-            No matches found.
-          </md-not-found>
-
-          <!--<div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
-            <div ng-message="required">You <b>must</b> have a favorite state.</div>
-            <div ng-message="minlength">Your entry is not long enough.</div>
-            <div ng-message="maxlength">Your entry is too long.</div>
-          </div>-->
-
-            {{ctrl.searchText}}
-
-          <!-- Disable caching completely -->
-        </md-autocomplete>
-      </div>
-    </form>
-  </md-content>
-
-  </body>
-
+                    </md-autocomplete>
+                </div>
+            </form>
+        </md-content>
+    </body>
 </html>
