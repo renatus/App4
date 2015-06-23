@@ -117,11 +117,14 @@
         </md-input-container>
         <md-autocomplete flex required
             md-input-name="autocompleteField"
+            <!-- Disables caching completely-->
             md-no-cache="ctrl.noCache"
             md-selected-item="ctrl.selectedItem"
             md-search-text="ctrl.searchText"
+            <!--Show list of suggestions by calling search function with user-entered text as an argument-->
             md-items="item in ctrl.querySearch(ctrl.searchText)"
             md-item-text="item.display"
+            <!-- Text of a label-->
             md-floating-label="Favorite state">
           <md-item-template>
             <span md-highlight-text="ctrl.searchText">{{item.display}}</span>
@@ -131,6 +134,8 @@
             <div ng-message="minlength">Your entry is not long enough.</div>
             <div ng-message="maxlength">Your entry is too long.</div>
           </div>-->
+
+          <!-- Disable caching completely -->
         </md-autocomplete>
       </div>
     </form>
